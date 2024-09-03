@@ -1,38 +1,33 @@
 require 'pry-byebug'
 
-file_array = File.readlines('google-10000-english-no-swears.txt')
-
 class Hangman
-  def initialize(dict)
-    @dict = dict
+  def initialize; end
+  @@file_array = File.readlines('google-10000-english-no-swears.txt')
+  def does_word_match?(random)
+    line = @@file_array[random - 1]
+    word = line.chomp
+    if word.length >= 5 && word.length <= 12
+      p word
+      return true
+    end
+    false
   end
 
-  def find_random_word(file_array)
+  def find_random_word
     # make flag for if word is found, set to false
     # while the flag is false do:
     # create random number
-    # iterate through each word in the text
-    # if the line number matches the randomly generated number
+    # pick line from file_array with random number
     # check if its between 5 and 12 letters
     # if yes, put the word and flag word_found as true
     # if not, redo process
     word_found = false
     while word_found == false
-    p random = rand(file_array.size)
-    file_array.each_with_index do |line,index|
-      if index == random - 1
-        word = line.chomp
-        if word.length >= 5 && word.length <= 12
-          word_found = true
-          puts word
-        end
-      end
+      p random = rand(@@file_array.size)
+      word_found = does_word_match?(random)
     end
   end
-  end
-
 end
 
-
-game = Hangman.new("test")
-game.find_random_word(file_array)
+game = Hangman.new
+game.find_random_word
