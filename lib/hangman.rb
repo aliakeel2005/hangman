@@ -31,18 +31,24 @@ class Hangman
     end
   end
 
+  def match_guess_with_word
+  end
+
   def guess_word
-    player_guess = gets.chomp.split('')
+    # iterate over the word
+    # if current letter includes guessed letter
+    # put the word in current guess at the right index
+    player_guess = gets.chomp
     p arr_word = @word.split('')
-    current_guess = []
-    player_guess.each_with_index do |letter, index|
-      if letter == arr_word[index]
-        current_guess.push(letter)
-      else
-        current_guess.push('_')
-      end
+    current_guess = Array.new(arr_word.size, '_')
+    guesses_left = 11
+    if arr_word.any?(player_guess)
+      current_guess[arr_word.index(player_guess)] = player_guess
+    else
+      guesses_left -= 1
     end
     p current_guess
+    p guesses_left
   end
 end
 
