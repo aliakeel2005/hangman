@@ -33,10 +33,12 @@ class Hangman
 
   def match_guess_with_word(player_guess, arr_word, current_guess)
     guesses_left = 11
-    if arr_word.any?(player_guess)
-      current_guess[arr_word.index(player_guess)] = player_guess
-    else
+    if arr_word.none?(player_guess)
       guesses_left -= 1
+    else
+      arr_word.each do |letter|
+        current_guess[arr_word.index(player_guess)] = player_guess if player_guess == letter
+      end
     end
     guesses_left
   end
