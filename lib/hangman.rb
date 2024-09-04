@@ -1,4 +1,4 @@
-require 'pry-byebug'
+# require 'pry-byebug'
 
 class Hangman
   def initialize
@@ -36,8 +36,8 @@ class Hangman
     if arr_word.none?(player_guess)
       guesses_left -= 1
     else
-      arr_word.each do |letter|
-        current_guess[arr_word.index(player_guess)] = player_guess if player_guess == letter
+      arr_word.each_with_index do |letter, index|
+        current_guess[index] = player_guess if player_guess == letter
       end
     end
     guesses_left
