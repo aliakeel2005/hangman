@@ -32,8 +32,17 @@ class Hangman
   end
 
   def guess_word
-    player_guess = gets.chomp
-    p @word.split('')
+    player_guess = gets.chomp.split('')
+    p arr_word = @word.split('')
+    current_guess = []
+    player_guess.each_with_index do |letter, index|
+      if letter == arr_word[index]
+        current_guess.push(letter)
+      else
+        current_guess.push('_')
+      end
+    end
+    p current_guess
   end
 end
 
