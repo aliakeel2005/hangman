@@ -47,6 +47,8 @@ class Hangman
     arr_word = @word.split('')
     p current_guess = Array.new(arr_word.size, '_')
     while @guesses_left.positive?
+      break if current_guess == arr_word
+
       player_guess = gets.chomp
       p match_guess_with_word(player_guess, arr_word, current_guess)
       p current_guess
