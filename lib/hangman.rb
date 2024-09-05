@@ -4,6 +4,7 @@ class Hangman
   def initialize
     @file_array = File.readlines('google-10000-english-no-swears.txt')
     @word = nil
+    @guesses_left = 6
   end
 
   def does_word_match?(random)
@@ -32,23 +33,24 @@ class Hangman
   end
 
   def match_guess_with_word(player_guess, arr_word, current_guess)
-    guesses_left = 11
     if arr_word.none?(player_guess)
-      guesses_left -= 1
+      @guesses_left -= 1
     else
       arr_word.each_with_index do |letter, index|
         current_guess[index] = player_guess if player_guess == letter
       end
     end
-    guesses_left
+    @guesses_left
   end
 
   def guess_word
-    player_guess = gets.chomp
-    p arr_word = @word.split('')
-    current_guess = Array.new(arr_word.size, '_')
-    p match_guess_with_word(player_guess, arr_word, current_guess)
-    p current_guess
+    arr_word = @word.split('')
+    p current_guess = Array.new(arr_word.size, '_')
+    while @guesses_left.positive?
+      player_guess = gets.chomp
+      p match_guess_with_word(player_guess, arr_word, current_guess)
+      p current_guess
+    end
   end
 end
 
