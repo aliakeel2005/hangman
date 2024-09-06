@@ -14,17 +14,15 @@ class Hangman
   def does_word_match?(random)
     line = @file_array[random - 1]
     @word = line.chomp
-    if @word.length >= 5 && @word.length <= 12
-      p @word
-      return true
-    end
+    return true if @word.length >= 5 && @word.length <= 12
+
     false
   end
 
   def find_random_word
     word_found = false
     while word_found == false
-      p random = rand(@file_array.size)
+      random = rand(@file_array.size)
       word_found = does_word_match?(random)
     end
   end
@@ -55,7 +53,7 @@ class Hangman
     @current_guess = Array.new(arr_word.size, '_')
     while @guesses_left.positive?
       p @current_guess
-      p @guesses_left
+      puts "Guesses left: #{@guesses_left}"
       if @current_guess == arr_word
         puts 'Congrats! you guessed the word!'
         break
@@ -75,6 +73,7 @@ class Hangman
 
       match_guess_with_word(player_guess, arr_word)
     end
+    puts "the word was: #{@word}"
   end
 
   def load_game(string)
