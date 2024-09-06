@@ -1,4 +1,3 @@
-# require 'pry-byebug'
 require 'yaml'
 
 class Hangman
@@ -51,35 +50,41 @@ class Hangman
   end
 
   def guess_word
-    puts 'Type 1 if you want to save your game, press 2 if you want to load previous save'
+    puts 'Type 1 if you want to save your game, 2 if you want to load previous save'
     arr_word = @word.split('')
-    p @current_guess = Array.new(arr_word.size, '_')
+    @current_guess = Array.new(arr_word.size, '_')
     while @guesses_left.positive?
-      player_guess = gets.chomp.downcase
+      p @current_guess
+      p @guesses_left
       if @current_guess == arr_word
-        break
-      elsif player_guess == '1'
-        save_game
+        puts 'Congrats! you guessed the word!'
         break
       end
 
-      p match_guess_with_word(player_guess, arr_word)
-      p @current_guess
+      player_guess = gets.chomp.downcase
+      if player_guess == '1'
+        save_game
+        puts 'Game saved!'
+        break
+      elsif player_guess == '2'
+        load_game('saves/save.yml')
+        puts 'Game loaded!'
+        arr_word = @word.split('')
+        next
+      end
+
+      match_guess_with_word(player_guess, arr_word)
     end
   end
 
-  def save_game?
-    puts ''
-  end
-
-  def self.load_game(string)
-    data = YAML.load(string)
-    new(data[:word], data[:guesses_left], data[current_guess])
+  def load_game(string)
+    data = YAML.load_file(string)
+    @word = data[:word]
+    @guesses_left = data[:guesses_left]
+    @current_guess = data[:current_guess]
   end
 end
 
 game = Hangman.new
 game.find_random_word
 game.guess_word
-# p game.save_game
-# Hangman.load_game(game.save_game)
